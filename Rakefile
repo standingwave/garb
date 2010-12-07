@@ -12,13 +12,14 @@ spec = Gem::Specification.new do |s|
   s.has_rdoc          = false
   s.rubyforge_project = 'viget'
   s.summary           = "Google Analytics API Ruby Wrapper"
-  s.authors           = ['Tony Pitale']
-  s.email             = 'tony.pitale@viget.com'
-  s.homepage          = 'http://github.com/vigetlabs/garb'
+  s.authors           = ['Gabriel Williams']
+  s.email             = 'ummonai@gmail.com'
+  s.homepage          = 'https://github.com/standingwave/garb'
   s.files             = %w(README.md Rakefile) + Dir.glob("lib/**/*")
   s.test_files        = Dir.glob("test/**/*")
 
-  s.add_dependency("crack", [">= 0.1.6"])
+  # s.add_dependency("crack", [">= 0.1.6"])
+  s.add_dependency("xmlsimple", [">= 1.0.12"])
   s.add_dependency("activesupport", [">= 2.2.0"])
 end
 

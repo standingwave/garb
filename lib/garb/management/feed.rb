@@ -10,12 +10,12 @@ module Garb
       end
 
       def parsed_response
-        @parsed_response ||= Crack::XML.parse(response.body)
+        @parsed_response ||= XmlSimple.xml_in(response.body, { 'ForceArray' => ['entry'] })
       end
 
       def entries
         # possible to have nil entries, yuck
-        parsed_response ? [parsed_response['feed']['entry']].flatten.reject {|e| e.nil?} : []
+        parsed_response ? [parsed_response['entry']].flatten.reject {|e| e.nil?} : []
       end
 
       def response

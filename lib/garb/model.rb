@@ -17,6 +17,11 @@ module Garb
       @dimensions << fields
     end
 
+    def aggregate(*fields)
+      @aggregate ||= ReportParameter.new(:aggregate)
+      @aggregate << fields
+    end
+    
     def set_instance_klass(klass)
       @instance_klass = klass
     end
@@ -32,6 +37,7 @@ module Garb
         default_params,
         metrics.to_params,
         dimensions.to_params,
+        aggregate.to_params,
         parse_filters(options).to_params,
         parse_segment(options),
         parse_sort(options).to_params,

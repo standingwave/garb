@@ -3,7 +3,8 @@ require 'net/https'
 
 require 'cgi'
 require 'ostruct'
-require 'crack'
+# require 'crack'
+require 'xmlsimple'
 
 begin
   require 'active_support/inflector'
@@ -41,7 +42,6 @@ require 'support'
 
 module Garb
   GA = "http://schemas.google.com/analytics/2008"
-
   extend self
 
   def to_google_analytics(thing)
@@ -57,7 +57,10 @@ module Garb
   alias :from_ga :from_google_analytics
 
   def parse_properties(entry)
-    Hash[entry['dxp:property'].map {|p| [Garb.from_ga(p['name']),p['value']]}]
+    entry['property'].inject({}) do |hash, p|
+      hash[Garb.from_ga(p['name'])] = p['value']
+      hash
+    end
   end
 
   def parse_link(entry, rel)

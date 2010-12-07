@@ -1,5 +1,14 @@
 module Garb
   class Session
+    cattr_accessor :requests
+    def initialize
+      @@requests = []
+    end
+    
+    def self.requests
+      @@requests ||= []
+    end
+    
     module Methods
       attr_accessor :auth_token, :access_token, :email
 

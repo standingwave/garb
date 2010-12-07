@@ -14,7 +14,7 @@ module Garb
       ProfileReports.add_report_method(base)
     end
 
-    %w(metrics dimensions sort).each do |parameter|
+    %w(metrics dimensions sort aggregate).each do |parameter|
       class_eval <<-CODE
         def #{parameter}(*fields)
           @#{parameter} ||= ReportParameter.new(:#{parameter})
@@ -93,6 +93,7 @@ module Garb
       [
         metrics.to_params,
         dimensions.to_params,
+        aggregate.to_params,
         sort.to_params,
         filters.to_params,
         page_params,
@@ -109,6 +110,7 @@ module Garb
     def send_request_for_body
       request = DataRequest.new(@profile.session, URL, params)
       response = request.send_request
+      # RAILS_DEFAULT_LOGGER.debug response.body
       response.body
     end
   end

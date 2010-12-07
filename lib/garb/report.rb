@@ -15,14 +15,32 @@ module Garb
       @limit = opts.fetch(:limit, nil)
       @offset = opts.fetch(:offset, nil)
 
+      @response = nil
+      
       metrics opts.fetch(:metrics, [])
       dimensions opts.fetch(:dimensions, [])
+      aggregate opts.fetch(:aggregate, [])
       sort opts.fetch(:sort, [])
     end
 
     def results
-      ReportResponse.new(send_request_for_body).results
+      if @response
+        @response.results
+      else
+        body = @debug = send_request_for_body
+      
+        @response = ReportResponse.new(body)
+        @response.results
+      end
     end
-
+    
+    def more_info
+      if @response
+        @response.more_info
+      else
+        results
+        @response.more_info
+      end
+    end
   end
 end

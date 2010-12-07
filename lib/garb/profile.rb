@@ -8,7 +8,7 @@ module Garb
     def initialize(entry, session)
       @session = session
       @title = entry['title']
-      @table_id = entry['dxp:tableId']
+      @table_id = entry['tableId']
       @goals = (entry[Garb.to_ga('goal')] || []).map {|g| Goal.new(g)}
 
       Garb.parse_properties(entry).each do |k,v|

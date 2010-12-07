@@ -11,15 +11,15 @@ module Garb
     end
 
     def parsed_response
-      @parsed_response ||= Crack::XML.parse(response.body)
+      @parsed_response ||= XmlSimple.xml_in(response.body, { 'ForceArray' => ['entry'] })
     end
 
     def entries
-      parsed_response ? [parsed_response['feed']['entry']].flatten : []
+      parsed_response ? [parsed_response['entry']].flatten : []
     end
 
     def segments
-      parsed_response ? [parsed_response['feed']['dxp:segment']].flatten : []
+      parsed_response ? [parsed_response['dxp:segment']].flatten : []
     end
   end
 end
